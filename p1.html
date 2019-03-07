@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title> Digimania</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--- bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- angular js -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
+        <!-- linking stylesheets doc -->
+        <link rel="stylesheet" href="web.css" type="text/css">
+        </link>
+        <link rel="stylesheet" href="ngcss.css" type="text/css">
+        </link>
+        <!-- add css, ngToast, angularSanitise, textAngular -->
+    </head>
+    <body>
+        <div class = "container-fluid" > 
+            <div class="nav navbar-default">
+                <div class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>                        
+                            </button>
+                        <a class="navbar-brand" href="#">DIGIMANIA </a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#">Home</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Projects</a></li>
+                                <li><a href="#">Contact</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-log-in">
+                                            </span> 
+                                            Login
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">  
+                                            <span class="glyphicon glyphicon-check">
+                                            </span> 
+                                            Sing in  
+                                        </a>  
+                                    </li>
+                                </ul>
+                        </div>
+                    </div>
+                    <div class="jumbotron " style = "background-image: url(digimania.jpg); position:fixed">
+                            <centre>
+                                <h1  class= "P1" > Digimania </h1>
+                            </centre>
+                        </div>
+                </div>
+                <div class="jumbotron " style = "background-image: url(digimania.jpg); position:fixed">
+                    <centre>
+                        <h1  class= "P1" > Digimania </h1>
+                    </centre>
+                </div>
+                <!-- about the website-->
+                <div class= >
+                    <div>
+                        <h1>hjzgftagsd garyebdcdc</h1>
+                    </div>
+                </div>
+                <div class=" row ">
+                    <div class= "col-xs-10 col-sm-6 col-md-6">
+                        <!-- login and sign up -->
+                        <div class="jumbotron text-centre navbar ">
+                            <a ui-sref="login" ng-if="!loggedIn">
+                                <div class="img-container ">
+                                    <img src="login.jpg" class="img-circle" alt="login" width="304" height="236">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class= "col-xs-10 col-sm-6 col-md-6">
+                            <!-- login and sign up -->
+                            <div class="jumbotron navbar " >
+                                <a ui-sref="login" ng-if="!loggedIn">
+                                    <div class="img-container">
+                                        <img src="signup.jpg" class="img-circle" alt="login" width="304" height="236">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                </div>
+                <!-- about and contact details -->
+                <div>
+                    <h1>dsjfhsdifhnwjcghiuoo ijcxidjasd</h1>
+                </div>
+        </div>
+    </body>
+</html>

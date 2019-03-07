@@ -13,8 +13,8 @@
         <!-- angular js -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script></head>
 <body>
-<div class="row ">
-    <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-3 ">
+<div class="row " style="background-image: url(bg-im.jpg)">
+    <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-4 " style="background-color: white">
         <div class="imgcontainer">
             <img src="login.jpg" alt="Avatar" class="avatar">
         </div>
@@ -26,20 +26,36 @@
                 <div class="col-xs-12 col-sm-12 col-md-12  ">
                     <div class="form-group">
                         <b>Email: </b>
-                        <input type="text" ng-model="user.email" class="form-control input-md" placeholder="abc@gmail.com" tabindex="1" required />
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                            <input type="text" ng-model="user.email" class="form-control input-md" placeholder="abc@gmail.com" tabindex="1" required />
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12  ">
                     <div class="form-group">
                         <b>Password: </b>
-                        <input type="password" ng-model="user.password" class="form-control input-md" tabindex="2" required />
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </span>
+                            <input type="password" ng-model="user.password" class="form-control input-md" placeholder="*****" tabindex="2" required />
+                        </div>
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 ">
+                        <div class="form-group">
+                            <div class= "checkbox">
+                            <label ><input type="checkbox"  ng-model="remember" tabindex="5"> Show </label>
+                            </div>
+                        </div>
+                    </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 ">
                     <div class="form-group">
                         <a ui-sref="signup" type="button" class="btn btn-warning btn-md" tabindex="3">
                             Not Registered?
-                            <hr/>
                             Create an account!
                         </a> 
                     </div>

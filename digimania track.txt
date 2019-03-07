@@ -1,3 +1,4 @@
-home 
-login
-signup
+home  
+login   done 
+signup  done
+create post done 
