@@ -17,60 +17,67 @@
 
     </head>
     <body>
-<div class="row pull-centre">
-    <div class="col-xs-10 col-sm-6 col-md-6 col-xs-offset-1 col-sm-offset-3 ">
-            <h2> Welcome {{user.fname}} {{ user.lname}} </h2>
-            <hr/>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6  ">
-                    <div class="form-group">
-                        <b>First Name: </b>
-                        <input type="text" ng-model="newUser.fname" class="form-control input-md" placeholder="first name" tabindex="1" required />
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6  ">
-                    <div class="form-group">
-                        <b>Last Name: </b>
-                        <input type="text" ng-model="newUser.lname" class="form-control input-md" tabindex="2" placeholder="last name" required />
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12  ">
-                    <div class="form-group">
-                            <b>Email: </b>
-                            <input type="email" ng-model="newUser.email" class="form-control input-md" placeholder="abc@hmail.com" tabindex="3" required />
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6  ">
-                    <div class="form-group">
-                        <b>Password: </b>
-                        <input type="password" ng-model="newUser.password" class="form-control input-md" tabindex="4" required />
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6  ">
-                    <div class="form-group">
-                        <b>Confirm Password: </b>
-                        <input type="password" ng-model="newUser.confirmPassword" class="form-control input-md" tabindex="5" required />
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4 col-md-4 ">
-                    <div class="form-group">
-                        <button type="button" ng-click="signup()" role="button" class="btn btn-primary btn-block btn-md" tabindex="6"> SignUp</button>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4 col-md-4 ">
-                    <div class="form-group">
-                        <button type="reset" ng-click="signup()" role="button" class="btn btn-danger btn-block btn-md" tabindex="7"> Reset </button>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4 col-md-4  ">
-                    <div class="form-group">
-                        <a ui-sref="login" class="btn btn-success btn-block btn-md" role="button" tabindex="8">
-                            LogIn
-                        </a>
-                    </div>
-                </div>
+        <div class="row pull-centre" style="background-image: url(bg-im.jpg)">
+            <div class="col-xs-12 col-sm-5 col-md-6 col-xs-offset-1 col-sm-offset-3" style="background-color: white">
+                <h2> Welcome </h2>
+                <hr/>
+                <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                          <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); height: 300; ">
+                                <a href="">
+                                    <span>
+                                        <img src="history.jpg" alt="history" style="width:100%"  class="img-circle" height="200" width="200">
+                                    </span>
+                                </a>
+                                <div class="container" style="padding: 0 16px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <p> <br>
+                                            <button class="button" style="border: none;outline: 0; display: inline-block; padding: 8px; color: white; background-color: #000; text-align: center; cursor: pointer; width: 150; "> 
+                                                HISTORY 
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); height: 300;">
+                                      <a href="">
+                                          <span>
+                                              <img src="Preferences.jpg" alt="history" style="width:100%"  class="img-circle" height="200" width="200">
+                                          </span>
+                                      </a>
+                                      <div class="container" style="padding: 0 16px;">
+                                          <div class="col-xs-12 col-sm-12 col-md-12">
+                                              <p> <br>
+                                                  <button class="button" style="border: none; outline: 0; display: inline-block; padding: 8px; color: white; background-color: #000; text-align: center; cursor: pointer; width: 150; "> 
+                                                      EDIT PREFERENCES
+                                                  </button>
+                                              </p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); height: 300;">
+                                          <a href="">
+                                              <span>
+                                                  <img src="CREATEPOST.jpg" alt="history" style="width:100%"  class="img-circle" height="200" width="200">
+                                              </span>
+                                          </a>
+                                          <div class="container" style="padding: 0 16px;">
+                                              <div class="col-xs-12 col-sm-12 col-md-12">
+                                                  <p> <br>
+                                                      <button class="button" style="border: none; outline: 0; display: inline-block; padding: 8px; color: white; background-color: #000; text-align: center; cursor: pointer; width:150; "> 
+                                                          CREATE POST  
+                                                      </button>
+                                                  </p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
             </div>
-    </div>
-</div>
-</body>
+        </div>
+    </body>
 </html>
+        

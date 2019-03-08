@@ -2,3 +2,7 @@ home
 login   done 
 signup  done
 create post done 
+userpage DONE 
+history  
+preferences
+feedback 
