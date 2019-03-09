@@ -4,5 +4,5 @@ signup  done
 create post done 
 userpage DONE 
 history  
-preferences
+preferences DONE 
 feedback 
