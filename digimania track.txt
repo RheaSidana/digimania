@@ -1,8 +1,9 @@
-home  
+home  done 
 login   done 
 signup  done
 create post done 
 userpage DONE 
-history  
+history  done 
+view post done 
 preferences DONE 
-feedback 
+feedback  done 
