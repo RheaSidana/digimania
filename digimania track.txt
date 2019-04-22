@@ -1,9 +1,17 @@
 home  done 
 login   done 
-signup  done
+signup  done  (controller done)
 create post done 
 userpage DONE 
 history  done 
 view post done 
 preferences DONE 
 feedback  done 
+
+   whatsapp
+facebook
+twitter
+linkedin 
+pinterest
+   google (plus)
+   tumblr
