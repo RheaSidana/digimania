@@ -1,11 +1,12 @@
-home  done 
-login   done 
+home  done (controller done)
+login   done (controller done)
 signup  done  (controller done)
-create post done 
-userpage DONE 
+create post done (controller semi-done )
+userpage DONE (controller done)
 history  done 
-view post done 
-preferences DONE 
+historypost done 
+preferences DONE (controller semi-done)
+
 feedback  done 
 
    whatsapp
@@ -15,3 +16,7 @@ linkedin
 pinterest
    google (plus)
    tumblr
+
+
+template/create
+img/about.jpg

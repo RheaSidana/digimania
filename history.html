@@ -26,7 +26,7 @@
         <div class="panel-group">
             <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="Posts in history " style="height:214px;">
                 <div class="panel-heading">
-                    {{user. topic}}
+                    {{post.topic}}
                 </div>
                 <div class="panel-body" ng-bind-html="post.content | htmlToPlainText| limitTo:100">
                 </div>
