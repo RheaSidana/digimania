@@ -1,7 +1,5 @@
 var app = angular.module('myApp', ['ui.router', ' ngToast',  'textangular']);
 
-
-
 app.factory('Authservice', function($q, $rootScope ){
     return {
         isauthenticated:function(){
@@ -25,7 +23,11 @@ app.factory('Authservice', function($q, $rootScope ){
     }
 });
 
-
+app.filter ('htmlToPlainText', function(){
+    return function(text){
+        return text ? String (text). replace(/[^>]+/gm,'') : '' ;
+    }
+})
 app.config ( function ( $stateProvider, $urlRouterProvider){
     $stateProvider
     .state('home',{
@@ -71,10 +73,12 @@ app.config ( function ( $stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise("/");
 });
 
-
 app.controller('HomeCtrl', function ($rootScope, $timeout, $state){
     $scope.logout=function(){
         console.log ("logoutcalled");        
+    }
+    $scope.querysend=function(){
+        //send email to digimania@helpdesk.com from query.email
     }
 });
 
@@ -149,7 +153,7 @@ app.controller ('LoginCtrl', function($scope, $location, $timeout,$rootScope,ngT
     };
 });
 
-app.controller('UserpageCtrl', function ($rootScope, $timeout, $state){
+app.controller('UserpageCtrl', function ($scope, $timeout,ngToast, $state){
     $scope.createPost=function(){
         $scope.user.currentUser()
         .then (function(res){
@@ -224,35 +228,59 @@ app.controller('UserpageCtrl', function ($rootScope, $timeout, $state){
     }; 
 });
 
-app.controller('HistoryCtrl', function ($rootScope, $timeout, $state){
-    $rootScope.historyCount=0;
-
+app.controller('HistoryCtrl', function ($rootScope, $timeout,ngToast, $state){
+    $rootScope.historyNo = function(){
+        $scope.user.currentUser()
+        .then (function(res){
+            if(res.user){
+                if($rootScope.historyCount >5){
+                    //delete the first post
+                }
+                //view summary list of the the posts
+            }
+            else{
+                $timeout(function(){
+                    ngToast.create("An error occured!! login first.");
+                });
+                $state.go("login");
+            }            
+        }),
+        function(err){
+            $timeout(function(){
+                ngToast.create("An error occured");
+            });
+            console.log(err);
+        }
+    };
 });
 
-app.controller('PreferenceCtrl', function ($rootScope, $timeout, $state){
+app.controller('PreferenceCtrl', function ($scope, $timeout,ngToast, $state){
     $scope.choice=function(){
         $scope.user.currentUser()
         .then(function(res){
             if(res.user){
+                
                 if(post.FACEBOOK == checked)
                 {
                     $scope.postonFB(); //function calling
+                    $scope.$apply();
                 }
-                else
                 if(post.TWITTER == checked)
                 {
                     $scope.postonTWEET();
+                    $scope.$apply();
                 }
-                else
                 if(post.LINKEDIN == checked)
                 {
                     $scope.postonLINKEDIN();
+                    $scope.$apply();
                 }
-                else
                 if(post.PINTEREST == checked)
                 {
                     $scope.postonPINS();
+                    $scope.$apply();
                 }
+
                 else
                 {
                     $timeout(function(){
@@ -289,8 +317,9 @@ app.controller('PreferenceCtrl', function ($rootScope, $timeout, $state){
     };
 });
 
-app.controller('createCtrl', function ($rootScope, $timeout, $state){
+app.controller('createCtrl', function ($rootScope, $timeout,ngToast, $state){
     $scope.newPost={};
+    $rootScope.historyCount=0;
     $scope.create=function(){
         $scope.user.currentUser()
         .then(function(res){
@@ -299,6 +328,7 @@ app.controller('createCtrl', function ($rootScope, $timeout, $state){
                 ngToast.create("Post Successful");
                 $state.go("userpage");
                 $rootScope.historyCount += 1;
+                $scope.$apply();
             }
             else{
                 ngToast.create("error occured!! Login First.");
@@ -314,6 +344,7 @@ app.controller('createCtrl', function ($rootScope, $timeout, $state){
     }
 });
 
-app.controller('HistoryPostCtrl', function ($rootScope, $timeout, $state){
-
+app.controller('HistoryPostCtrl', function ($rootScope,ngToast, $timeout, $state){
+    //display image from  the database 
+    
 });
