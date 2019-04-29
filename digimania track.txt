@@ -20,3 +20,8 @@ pinterest
 
 template/create
 img/about.jpg
+
+
+database tables
+1. user info
+2. post 

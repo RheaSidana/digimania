@@ -1,5 +1,40 @@
+//VARIABLE FOR CONNECTING WITH MYSQL    
+var mysql = require('mysql');
+
+//creating connection
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "yourusername",
+    password: "yourpassword"
+});
+
+//connecting with mysql
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+
+    con.query("CREATE DATABASE maappdb", function (err, result) {
+        if (err) throw err;
+        console.log("Database created");
+    });
+
+    var sql = "CREATE TABLE user (name VARCHAR(255), address VARCHAR(255))";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Table created");
+    });
+
+    var sqlpost = "CREATE TABLE posts (name VARCHAR(255), address VARCHAR(255))";
+    con.query(sqlpost, function (err, result) {
+       if (err) throw err;
+        console.log("Table created");
+    });
+});
+
+//creating the app
 var app = angular.module('myApp', ['ui.router', ' ngToast',  'textangular']);
 
+//authenticating the app
 app.factory('Authservice', function($q, $rootScope ){
     return {
         isauthenticated:function(){
@@ -23,11 +58,14 @@ app.factory('Authservice', function($q, $rootScope ){
     }
 });
 
+//applying filter 
 app.filter ('htmlToPlainText', function(){
     return function(text){
         return text ? String (text). replace(/[^>]+/gm,'') : '' ;
     }
 })
+
+//configuring routing of the app
 app.config ( function ( $stateProvider, $urlRouterProvider){
     $stateProvider
     .state('home',{
@@ -73,6 +111,7 @@ app.config ( function ( $stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise("/");
 });
 
+//controller for home control
 app.controller('HomeCtrl', function ($rootScope, $timeout, $state){
     $scope.logout=function(){
         console.log ("logoutcalled");        
@@ -82,6 +121,7 @@ app.controller('HomeCtrl', function ($rootScope, $timeout, $state){
     }
 });
 
+//controller for signup control
 app.controller('SignupCtrl', function($scope,ngToast,$rootScope){
     $rootScope.newUser={};
     $rootScope.LoggedIn = false;
@@ -113,6 +153,7 @@ app.controller('SignupCtrl', function($scope,ngToast,$rootScope){
 
 });
 
+//controller for login control
 app.controller ('LoginCtrl', function($scope, $location, $timeout,$rootScope,ngToast){
     $rootScope.user={};
     $scope.login = function(){
@@ -153,6 +194,7 @@ app.controller ('LoginCtrl', function($scope, $location, $timeout,$rootScope,ngT
     };
 });
 
+////controller for userpage control
 app.controller('UserpageCtrl', function ($scope, $timeout,ngToast, $state){
     $scope.createPost=function(){
         $scope.user.currentUser()
@@ -228,6 +270,7 @@ app.controller('UserpageCtrl', function ($scope, $timeout,ngToast, $state){
     }; 
 });
 
+////controller for history control, RETRIEVING DATA
 app.controller('HistoryCtrl', function ($rootScope, $timeout,ngToast, $state){
     $rootScope.historyNo = function(){
         $scope.user.currentUser()
@@ -254,6 +297,7 @@ app.controller('HistoryCtrl', function ($rootScope, $timeout,ngToast, $state){
     };
 });
 
+//controller for preference selecting control 
 app.controller('PreferenceCtrl', function ($scope, $timeout,ngToast, $state){
     $scope.choice=function(){
         $scope.user.currentUser()
@@ -317,6 +361,7 @@ app.controller('PreferenceCtrl', function ($scope, $timeout,ngToast, $state){
     };
 });
 
+//controller for create post control, POST DATA
 app.controller('createCtrl', function ($rootScope, $timeout,ngToast, $state){
     $scope.newPost={};
     $rootScope.historyCount=0;
@@ -344,6 +389,7 @@ app.controller('createCtrl', function ($rootScope, $timeout,ngToast, $state){
     }
 });
 
+//controller for historypost control, RETRIEVING DATA
 app.controller('HistoryPostCtrl', function ($rootScope,ngToast, $timeout, $state){
     //display image from  the database 
     
