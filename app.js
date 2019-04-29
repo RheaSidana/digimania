@@ -1,3 +1,14 @@
+var express = require(express);
+
+var app = express()
+ 
+app.get('/', function (req, res) {
+  res.send('Hello World')
+})
+ 
+app.listen(3000);
+
+
 //VARIABLE FOR CONNECTING WITH MYSQL    
 var mysql = require('mysql');
 
@@ -18,18 +29,20 @@ con.connect(function(err) {
         console.log("Database created");
     });
 
-    var sql = "CREATE TABLE user (name VARCHAR(255), address VARCHAR(255))";
+    var sql = "CREATE TABLE user ( UserID int identity(1,1) primary key, fname VARCHAR(255) NOT NULL, lname VARCHAR(255) NOT NULL, email NVARCHAR(320) NOT NULL, psswrd VARCHAR(255) NOT NULL )";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Table created");
     });
-
-    var sqlpost = "CREATE TABLE posts (name VARCHAR(255), address VARCHAR(255))";
+        // image left
+    var sqlpost = "CREATE TABLE posts (topic VARCHAR(255),  desc VARCHAR(255), price VARCHAR(255), link VARCHAR(255), desc VARCHAR(255), hashtag VARCHAR(255), )";
     con.query(sqlpost, function (err, result) {
        if (err) throw err;
         console.log("Table created");
     });
 });
+
+
 
 //creating the app
 var app = angular.module('myApp', ['ui.router', ' ngToast',  'textangular']);
@@ -134,6 +147,43 @@ app.controller('SignupCtrl', function($scope,ngToast,$rootScope){
                 console.log(" All Good!!!!  Lets Sign Up !! ");
                 ngToast.create("All good. Lets continue");
                 $rootScope.LoggedIn = true;
+                var securePassword = require('secure-password');
+ 
+            // Initialise our password policy
+            var pwd = securePassword();
+ 
+            var Password = Buffer.from('my secret password');
+ 
+            // Register user
+            pwd.hash(Password, function (err, hash) {
+                if (err) 
+                    throw err;
+ 
+                // Save hash somewhere
+                pwd.verify(Password, hash, function (err, result) {
+                    if (err) 
+                        throw err;
+    
+                    switch (result) {
+                        case securePassword.INVALID_UNRECOGNIZED_HASH:
+                            return console.error('This hash was not made with secure-password. Attempt legacy algorithm');
+                        case securePassword.INVALID:
+                            return console.log('Invalid password');
+                        case securePassword.VALID:
+                            return console.log('Authenticated');
+                        case securePassword.VALID_NEEDS_REHASH:
+                            console.log('Yay you made it, wait for us to improve your safety');
+ 
+                        pwd.hash(userPassword, function (err, improvedHash) {
+                            if (err) 
+                                console.error('You are authenticated, but we could not improve your safety this time around');
+ 
+                            // Save improvedHash somewhere
+                        })
+                    break;
+                    }
+                });
+            });
             }
             else{
                 console.log("Password donot match");

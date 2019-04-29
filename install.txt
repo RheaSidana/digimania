@@ -9,3 +9,16 @@ npm install mysql
 Save the code In a file ca"demo_db_connection.js" and run the file:
 node demo_db_connection.js
 
+npm install secure-password
+
+npm install -g express-generator-api
+express-api angular-node-express-api & cd angular-node-express-api
+npm install
+
+npm install -g @angular/cli
+
+npm install --save bootstrap@3
+
+
+Finally! To start the API server:
+npm start
