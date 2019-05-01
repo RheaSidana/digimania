@@ -1,7 +1,7 @@
 home  done (controller semi-done)
 login   done (controller done)
 signup  done  (controller done)
-create post done (controller semi-done )
+create post done (controller done )
 userpage DONE (controller done)
 history  done (controller semi-done )
 historypost done 
@@ -22,6 +22,6 @@ template/create
 img/about.jpg
 
 
-database tables
-1. user info
+database tables (created, inserted, )
+1. user info 
 2. post 

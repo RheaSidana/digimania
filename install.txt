@@ -19,6 +19,9 @@ npm install -g @angular/cli
 
 npm install --save bootstrap@3
 
+$ bower install angularjs-socialshare --save
+$ npm install angular-socialshare --save
+
 
 Finally! To start the API server:
 npm start

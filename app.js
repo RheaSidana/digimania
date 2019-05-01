@@ -35,17 +35,15 @@ con.connect(function(err) {
         console.log("Table created");
     });
         // image left
-    var sqlpost = "CREATE TABLE posts (topic VARCHAR(255),  desc VARCHAR(255), price VARCHAR(255), link VARCHAR(255), desc VARCHAR(255), hashtag VARCHAR(255), )";
+    var sqlpost = "CREATE TABLE posts ( UserID int identity(1,1) primary key, topic VARCHAR(255), desc VARCHAR(255), price VARCHAR(255), link VARCHAR(255), hashtag VARCHAR(255), )";
     con.query(sqlpost, function (err, result) {
        if (err) throw err;
         console.log("Table created");
     });
 });
 
-
-
 //creating the app
-var app = angular.module('myApp', ['ui.router', ' ngToast',  'textangular']);
+var app = angular.module('myApp', ['ui.router', ' ngToast',  'textangular' , '720kb.socialshare' ]);
 
 //authenticating the app
 app.factory('Authservice', function($q, $rootScope ){
@@ -137,8 +135,10 @@ app.controller('HomeCtrl', function ($rootScope, $timeout, $state){
 //controller for signup control
 app.controller('SignupCtrl', function($scope,ngToast,$rootScope){
     $rootScope.newUser={};
+    $rootScope.i = 0;
     $rootScope.LoggedIn = false;
     $rootScope.SignUp=function(){
+    
         if($rootScope.newUser.fname && $rootScope.newUser.lname && $rootScope.newUser.email && $rootScope.newUser.password && $rootScope.newUser.confirmPassword )
         {
             console.log(" All fields are valid !! ");
@@ -148,9 +148,12 @@ app.controller('SignupCtrl', function($scope,ngToast,$rootScope){
                 ngToast.create("All good. Lets continue");
                 $rootScope.LoggedIn = true;
                 var securePassword = require('secure-password');
+
+                i = i+1;
  
             // Initialise our password policy
             var pwd = securePassword();
+            $rootScope.passwd = 0;
  
             var Password = Buffer.from('my secret password');
  
@@ -177,11 +180,22 @@ app.controller('SignupCtrl', function($scope,ngToast,$rootScope){
                         pwd.hash(userPassword, function (err, improvedHash) {
                             if (err) 
                                 console.error('You are authenticated, but we could not improve your safety this time around');
- 
+
                             // Save improvedHash somewhere
+                            passwd = improvedHash;
                         })
                     break;
                     }
+                });
+
+                con.connect(function(err) {
+                    if (err) throw err;
+                    console.log("Connected!");
+                    var sql = "INSERT INTO user (UserID, fname, lname, email, psswrd ) VALUES ( i, $rootScope.newUser.fname, $rootScope.newUser.lname, $rootScope.newUser.email, $rootScope.passwd )";
+                    con.query(sql, function (err, result) {
+                      if (err) throw err;
+                      console.log( i , " record inserted");
+                    });
                 });
             });
             }
@@ -413,7 +427,7 @@ app.controller('PreferenceCtrl', function ($scope, $timeout,ngToast, $state){
 
 //controller for create post control, POST DATA
 app.controller('createCtrl', function ($rootScope, $timeout,ngToast, $state){
-    $scope.newPost={};
+    $rootScope.newPost={};
     $rootScope.historyCount=0;
     $scope.create=function(){
         $scope.user.currentUser()
@@ -423,6 +437,17 @@ app.controller('createCtrl', function ($rootScope, $timeout,ngToast, $state){
                 ngToast.create("Post Successful");
                 $state.go("userpage");
                 $rootScope.historyCount += 1;
+
+                con.connect(function(err) {
+                    if (err) throw err;
+                    console.log("Connected!");
+                    var sql = "INSERT INTO post ( UserID, topic, desc, price, link, hashtag ) VALUES ( i, $rootScope.newPost.topic, $rootScope.newPost.desc, $rootScope.newPost.price, $rootScope.newPost.link, $rootScope.newPost.hashtag )";
+                    con.query(sql, function (err, result) {
+                      if (err) throw err;
+                      console.log(" record inserted");
+                    });
+                });
+
                 $scope.$apply();
             }
             else{
