@@ -22,6 +22,9 @@ npm install --save bootstrap@3
 $ bower install angularjs-socialshare --save
 $ npm install angular-socialshare --save
 
+npm install nodemailer
+
+$ npm install passport-remember-me
 
 Finally! To start the API server:
 npm start

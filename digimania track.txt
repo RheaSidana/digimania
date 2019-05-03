@@ -1,6 +1,6 @@
-home  done (controller semi-done)
+home  done (controller full-done)
 login   done (controller done)
-signup  done  (controller done)
+signup  done  (controller full-done)
 create post done (controller done )
 userpage DONE (controller done)
 history  done (controller semi-done )

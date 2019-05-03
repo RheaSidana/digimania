@@ -1,12 +1,14 @@
-var express = require(express);
-
-var app = express()
+var app = express();
  
 app.get('/', function (req, res) {
   res.send('Hello World')
 })
  
 app.listen(3000);
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 
 //VARIABLE FOR CONNECTING WITH MYSQL    
@@ -122,13 +124,49 @@ app.config ( function ( $stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise("/");
 });
 
-//controller for home control
+//controller for home control - full
 app.controller('HomeCtrl', function ($rootScope, $timeout, $state){
+    $rootScope.query={};
+
     $scope.logout=function(){
         console.log ("logoutcalled");        
     }
+
+    $rootScope.gologin=function(){
+        $state.go("login");
+    }
+
+    $rootScope.gosignup=function(){
+        $state.go("signup");
+    }
+
     $scope.querysend=function(){
         //send email to digimania@helpdesk.com from query.email
+        var nodemailer = require('nodemailer');
+
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+            user: 'digimania@helpdesk.com',
+            pass: '*****' //add the password in '   '
+            }
+        });
+
+        var mailOptions = {
+        from: $rootScope.query.email ,
+        to: 'digimania@helpdesk.com',
+        subject: ' ',
+        text: $rootScope.query.content
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+            console.log(error);
+            }
+            else {
+            console.log('Email sent: ' + info.response);
+            }
+        });
     }
 });
 
@@ -220,6 +258,8 @@ app.controller('SignupCtrl', function($scope,ngToast,$rootScope){
 //controller for login control
 app.controller ('LoginCtrl', function($scope, $location, $timeout,$rootScope,ngToast){
     $rootScope.user={};
+    $scope.remember;
+
     $scope.login = function(){
         $rootScope.user.currentUser()
         .then(function(res){
@@ -231,6 +271,39 @@ app.controller ('LoginCtrl', function($scope, $location, $timeout,$rootScope,ngT
                     $location.path("/userpage");
                     ngToast.create("user can now access the account");
                 });
+
+                if($scope.remember){
+                    passport.use(new RememberMeStrategy(
+                        function(token, done) {
+                        Token.consume(token, function (err, user) {
+                            if (err) { return done(err); }
+                            if (!user) { return done(null, false); }
+                            return done(null, user);
+                        });
+                        },
+                        function(user, done) {
+                        var token = utils.generateToken(64);
+                        Token.save(token, { userId: user.id }, function(err) {
+                            if (err) { return done(err); }
+                            return done(null, token);
+                            });
+                        }
+                    ));
+                    timeout(function ( req, res, next) {
+                        // issue a remember me cookie if the option was checked
+                        if (!req.body.remember_me) { return next(); }
+
+                        var token = utils.generateToken(64);
+                        Token.save(token, { userId: req.user.id }, function(err) {
+                            if (err) { return done(err); }
+                            res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
+                            return next();
+                        });
+                        },
+                        function(req, res) {
+                        res.redirect('/');
+                    });
+                }
             }
             else{
                 $rootScope.user.login($scope.user)
@@ -284,6 +357,8 @@ app.controller('UserpageCtrl', function ($scope, $timeout,ngToast, $state){
             console.log(err);
         };
     };
+
+
     $scope.history = function(){
         $scope.user.currentUser()
         .then (function(res){
