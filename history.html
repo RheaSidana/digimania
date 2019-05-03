@@ -22,16 +22,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel-group">
-                    <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="Posts in history " style="height:214px;">
+                    <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="post in newPost " style="height:214px;">
                         <div class="panel-heading">
-                            {{post.topic}}
+                            {{post.topicDisplay}}
                         </div>
-                        <div class="panel-body" ng-bind-html="post.content | htmlToPlainText| limitTo:100">
+                        <div class="panel-body" ng-bind-html="post.descDisplay | htmlToPlainText| limitTo:100">
                         </div>
                         <div class="panel-footer">
                             <div class="row">
                                 <div class ="col-md-12">
-                                    <a class="pull-right btn btn-info btn-sm " href="#/view/{{blog._id}}" ng-click = "viewing()">
+                                    <a class="pull-right btn btn-info btn-sm " href="#/view/{{blog._id}}" ng-click = "viewpost()">
                                         Read Now
                                     </a>
                                     <div class="clearfix">

@@ -37,7 +37,7 @@ con.connect(function(err) {
         console.log("Table created");
     });
         // image left
-    var sqlpost = "CREATE TABLE posts ( UserID int identity(1,1) primary key, topic VARCHAR(255), desc VARCHAR(255), price VARCHAR(255), link VARCHAR(255), hashtag VARCHAR(255), )";
+    var sqlpost = "CREATE TABLE posts ( UserID int identity(1,1) primary key, postID int identity(1,1), topic VARCHAR(255), desc VARCHAR(255), price VARCHAR(255), link VARCHAR(255), hashtag VARCHAR(255), )";
     con.query(sqlpost, function (err, result) {
        if (err) throw err;
         console.log("Table created");
@@ -411,14 +411,29 @@ app.controller('UserpageCtrl', function ($scope, $timeout,ngToast, $state){
 
 ////controller for history control, RETRIEVING DATA
 app.controller('HistoryCtrl', function ($rootScope, $timeout,ngToast, $state){
+    $scope.post.topicDisplay;
+    $scope.post.descDisplay;
     $rootScope.historyNo = function(){
         $scope.user.currentUser()
         .then (function(res){
             if(res.user){
-                if($rootScope.historyCount >5){
-                    //delete the first post
-                }
+                var y = historyCount;
                 //view summary list of the the posts
+                for (var x=1; x<=5; x++){
+
+                    con.connect(function(err) {
+                        if (err) throw err;
+                        post.topicDisplay = con.query("SELECT topic FROM posts WHERE postID=y ", function (err, result) {
+                            if (err) throw err;
+                            console.log(result);
+                        });
+
+                        post.descDisplay = con.query("SELECT desc FROM posts WHERE postID=y ", function (err, result) {
+                            if (err) throw err;
+                            console.log(result);
+                        });
+                    });
+                }
             }
             else{
                 $timeout(function(){
@@ -437,28 +452,39 @@ app.controller('HistoryCtrl', function ($rootScope, $timeout,ngToast, $state){
 });
 
 //controller for preference selecting control 
-app.controller('PreferenceCtrl', function ($scope, $timeout,ngToast, $state){
-    $scope.choice=function(){
+app.controller('PreferenceCtrl', ['Socialshare', function ($scope, $timeout,ngToast, $state, Socialshare){
+    $rootScope.FACEBOOK;
+    $rootScope.WHATSAPP;
+    $rootScope.TWITTER;
+    $rootScope.LINKEDIN;
+    $rootScope.PINTEREST;
+
+    $rootScope.choice=function(){
         $scope.user.currentUser()
         .then(function(res){
             if(res.user){
                 
-                if(post.FACEBOOK == checked)
+                if(FACEBOOK == checked)
                 {
                     $scope.postonFB(); //function calling
                     $scope.$apply();
                 }
-                if(post.TWITTER == checked)
+                if(WHATSAPP == checked)
+                {
+                    $scope.postonWhatsapp(); //function calling
+                    $scope.$apply();
+                }
+                if(TWITTER == checked)
                 {
                     $scope.postonTWEET();
                     $scope.$apply();
                 }
-                if(post.LINKEDIN == checked)
+                if(LINKEDIN == checked)
                 {
                     $scope.postonLINKEDIN();
                     $scope.$apply();
                 }
-                if(post.PINTEREST == checked)
+                if(PINTEREST == checked)
                 {
                     $scope.postonPINS();
                     $scope.$apply();
@@ -468,7 +494,9 @@ app.controller('PreferenceCtrl', function ($scope, $timeout,ngToast, $state){
                 {
                     $timeout(function(){
                         ngToast.create("no preference selected");
+
                     })
+                    $state.go("editPref");
                 }
             }
             else{
@@ -487,42 +515,73 @@ app.controller('PreferenceCtrl', function ($scope, $timeout,ngToast, $state){
     };
 
     $scope.postonFB=function(){
-
+        Socialshare.share({
+            'provider': 'facebook',
+            'attrs': {
+                'socialshareType': (user.post.topic) + ("\n") + (user.post.price) + ("\n") + (user.post.desc),
+                'socialshareUrl': ( user.post.link ),
+                'socialshareHashtags': ( user.post.hashtag )
+            }
+        });
     };
     $scope.postonTWEET=function(){
-        
+        Socialshare.share({
+            'provider': 'twitter',
+            'attrs': {
+                'socialshareText': (user.post.topic) + ("\n") + (user.post.price) + ("\n") ,
+                'socialshareUrl': ( user.post.link ),
+                'socialshareHashtags': ( user.post.hashtag )
+            }
+        });
     };
     $scope.postonLINKEDIN=function(){
-        
+        Socialshare.share({
+            'provider': 'linkedin',
+            'attrs': {
+                'socialshareText': (user.post.topic) + ("\n") + (user.post.price) + ("\n") + (user.post.desc) + ("\n") + ( user.post.hashtag ),
+                'socialshareUrl': ( user.post.link ),
+            }
+        });
     };
-    $scope.postonPINS=function(){
-        
+    
+    $scope.postonWhatsapp=function(){
+        Socialshare.share({
+            'provider': 'whatsapp',
+            'attrs': {
+                'socialshareText': (user.post.topic) + ("\n") + (user.post.price) + ("\n") + (user.post.desc) + ("\n") + ( user.post.hashtag ),
+                'socialshareUrl': ( user.post.link ),
+            }
+        });
     };
-});
+
+}]);
 
 //controller for create post control, POST DATA
 app.controller('createCtrl', function ($rootScope, $timeout,ngToast, $state){
     $rootScope.newPost={};
     $rootScope.historyCount=0;
+    $rootScope.uid=0;
     $scope.create=function(){
         $scope.user.currentUser()
         .then(function(res){
             if(res.user){
                 //save data to database
                 ngToast.create("Post Successful");
-                $state.go("userpage");
+                
                 $rootScope.historyCount += 1;
-
+                $rootScope.uid += 1;
                 con.connect(function(err) {
                     if (err) throw err;
                     console.log("Connected!");
-                    var sql = "INSERT INTO post ( UserID, topic, desc, price, link, hashtag ) VALUES ( i, $rootScope.newPost.topic, $rootScope.newPost.desc, $rootScope.newPost.price, $rootScope.newPost.link, $rootScope.newPost.hashtag )";
+                    var sql = "INSERT INTO post ( UserID, postID, topic, desc, price, link, hashtag ) VALUES ( i, $rootScope.historyCount, $rootScope.newPost.topic, $rootScope.newPost.desc, $rootScope.newPost.price, $rootScope.newPost.link, $rootScope.newPost.hashtag )";
                     con.query(sql, function (err, result) {
                       if (err) throw err;
                       console.log(" record inserted");
                     });
                 });
 
+                $rootScope.choice();
+                $state.go("userpage");
                 $scope.$apply();
             }
             else{

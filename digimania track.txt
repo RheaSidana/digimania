@@ -5,15 +5,16 @@ create post done (controller done )
 userpage DONE (controller done)
 history  done (controller semi-done )
 historypost done 
-preferences DONE (controller semi-done)
+preferences DONE (controller semi-done) - ONLY IMAGE LEFT
 
-feedback  done 
+feedback  done (controller done)
 
-   whatsapp
-facebook
-twitter
-linkedin 
-pinterest
+whatsapp (done)
+facebook (done)
+twitter (done)
+linkedin (done)
+pinterest(done)
+  
    google (plus)
    tumblr
 
