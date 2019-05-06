@@ -601,5 +601,56 @@ app.controller('createCtrl', function ($rootScope, $timeout,ngToast, $state){
 //controller for historypost control, RETRIEVING DATA
 app.controller('HistoryPostCtrl', function ($rootScope,ngToast, $timeout, $state){
     //display image from  the database 
-    
+    $scope.post.topicDisplay;
+    $scope.post.descDisplay;
+    $scope.post.priceDisplay;
+    $scope.post.linkDisplay;
+    $scope.post.hastagsDisplay;
+    $rootScope.historyNo = function(){
+        $scope.user.currentUser()
+        .then (function(res){
+            if(res.user){
+                var y = historyCount;
+                //view summary list of the the posts
+                for (var x=1; x<=5; x++){
+
+                    con.connect(function(err) {
+                        if (err) throw err;
+                        post.topicDisplay = con.query("SELECT topic FROM posts WHERE postID=y ", function (err, result) {
+                            if (err) throw err;
+                            console.log(result);
+                        });
+                        post.priceDisplay = con.query("SELECT price FROM posts WHERE postID=y ", function (err, result) {
+                            if (err) throw err;
+                            console.log(result);
+                        });
+                        post.descDisplay = con.query("SELECT desc FROM posts WHERE postID=y ", function (err, result) {
+                            if (err) throw err;
+                            console.log(result);
+                        });
+                        post.linkDisplay = con.query("SELECT link FROM posts WHERE postID=y ", function (err, result) {
+                            if (err) throw err;
+                            console.log(result);
+                        });
+                        post.hashtagsDisplay = con.query("SELECT hashtag FROM posts WHERE postID=y ", function (err, result) {
+                            if (err) throw err;
+                            console.log(result);
+                        });
+                    });
+                }
+            }
+            else{
+                $timeout(function(){
+                    ngToast.create("An error occured!! login first.");
+                });
+                $state.go("login");
+            }            
+        }),
+        function(err){
+            $timeout(function(){
+                ngToast.create("An error occured");
+            });
+            console.log(err);
+        }
+    };
 });

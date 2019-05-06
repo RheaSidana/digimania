@@ -3,6 +3,12 @@ download nodejs
 create file with extension .js
 initiate : node <filename>.js
 
+##angular js##
+npm install -g @angular/cli
+
+npm install jquery
+npm install bootstrap
+
 ## MYSQL ##
 download mysql
 npm install mysql
